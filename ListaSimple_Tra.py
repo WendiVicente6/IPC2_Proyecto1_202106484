@@ -1,42 +1,53 @@
 
-from Posicion_Celula import Posicion_Celula
+from NodoCabecera import NodoCabecera
 
 
-class ListaPatrones():
-    def __init__(self) -> None:
-        self.inicio = None
-        self.fin = None
-        self.size =0
-    
 
-    def crear_tejido(self,nombre,edad,cantper,m):
-        nueva_trayectoria = Posicion_Celula(nombre,edad,cantper,m)
-        self.size += 1
+class ListaHorizontal():
+    def __init__(self,cof) -> None:
+        self.primero:NodoCabecera=None
+        self.ultimo:NodoCabecera=None
+        self.cof=cof
+        self.size=0
 
-        if self.inicio is None:
-            self.inicio = nueva_trayectoria
-        
+    def insertar(self, nuevo):
+        self.size +=1
+        if self.primero==None:
+            self.primero=nuevo
+            self.ultimo=nuevo
         else:
-            trayectoria_temporal = self.inicio
-            while trayectoria_temporal.siguiente is not None:
-                trayectoria_temporal  = trayectoria_temporal.siguiente
-            trayectoria_temporal.siguiente = nueva_trayectoria
+            if nuevo.x< self.primero.x:
+                nuevo.siguiente=self.primero
+                self.primero.Anterior=nuevo
+                self.primero=nuevo
+            elif nuevo.x > self.ultimo.x:
+                self.ultimo.siguiente=nuevo
+                nuevo.Anterior=self.ultimo
+                self.ultimo=nuevo
+            else:
+                tmp:NodoCabecera = self.primero
+                while tmp!=None:
+                    if nuevo.x < tmp.x:
+                        nuevo.siguiente=tmp
+                        nuevo.Anterior=tmp.Anterior
+                        tmp.Anterior.siguiente=nuevo
+                        tmp.Anterior=nuevo
+                        break
+                    elif nuevo.x>tmp.x:
+                        tmp=tmp.siguiente
+                    else:
+                        break
 
-    
-    def get_tejido(self, nombre):
-        trayectoria_temporal = self.inicio
-        while trayectoria_temporal is not None:
-            if trayectoria_temporal.nombre_paciente == nombre:
-                return trayectoria_temporal
-            trayectoria_temporal = trayectoria_temporal.siguiente
-        return None
+    def mostrarEncabezados(self):
+        tmp=self.primero
+        while tmp!=None:
+            print('Encabezado ', self.cof, tmp.x)
+            tmp=tmp.siguiente
 
-
-    def imprimir_terrenos(self):
-        terreno = self.inicio
-        contador = 1
-        while terreno is not None:
-            print(str(contador) + ". " + terreno.nombre_paciente)
-            contador += 1
-            terreno = terreno.siguiente
-        return None
+    def getEncabezado(self,x)->NodoCabecera:
+        tmp=self.primero
+        while tmp!= None:
+            if x==tmp.x:
+                return tmp
+            tmp=tmp.siguiente
+        return None   
