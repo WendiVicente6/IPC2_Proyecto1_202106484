@@ -32,7 +32,7 @@ def cargar_archivo(mostrar,listatejido):
         for m in elem.iter('m'):
             tamaño=int(m.text)
             print('Tamaño Tejido:' ,tamaño)
-        listatejido.Crear_Paciente(tamaño,nombre,edad,cantper)
+        listatejido.Crear_Paciente(tamaño,nombre,edad,cantper,)
 
         for rejilla in elem.iter('rejilla'):
             tejido=listatejido.get_Paciente(nombre)
@@ -41,8 +41,10 @@ def cargar_archivo(mostrar,listatejido):
                 columna=int(posicion.attrib['c'])
                 fila=int(posicion.attrib['f'])
                 print('C y F:',columna,fila)
-                tejido.lista_posiciones.Insertar(fila,columna,"|1|",tamaño,posicion_sin_usar)
+                tejido.lista_posiciones.Insertar(fila,columna,"|1|",posicion_sin_usar)
+            tejido.lista_posiciones.Llenar(tamaño,tamaño,"|0|",False)
             tejido.lista_posiciones.graficarDibujo("TEJIDOS")
+
 def menu():
     print("")
     
@@ -57,10 +59,6 @@ def menu():
         print("")
         print("""Menú principal:
         1. Cargar archivo
-        2. Procesar archivo
-        3. Escribir archivo XML de salida 
-        4. Mostrar datos del estudiante
-        5. Generar gráfica
         6. Salida
         """)
 

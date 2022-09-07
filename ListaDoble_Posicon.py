@@ -9,15 +9,16 @@ class MatrizPosicioness():
         self.size=size
         self.filas = ListaHorizontal('fila')
         self.columnas = ListaHorizontal('columna')
-        self.vacias=-1
-        self.tamaño=0
+        self.vacias=0
+        self.primero=None
 
-    def Insertar(self, pos_x, pos_y, caracter,tamaño,posicion_sin_usar):
-        nuevo = nodoOrtogonal(pos_x, pos_y, caracter,tamaño,posicion_sin_usar) 
-        self.tamaño=tamaño
-
+    def Insertar(self, pos_x, pos_y, caracter,posicion_sin_usar):
+        nuevo = nodoOrtogonal(pos_x, pos_y, caracter,posicion_sin_usar) 
+        self.sin_usar=posicion_sin_usar
         nodo_X = self.filas.getEncabezado(pos_x)
         nodo_Y = self.columnas.getEncabezado(pos_y)
+        self.primero=nuevo
+        self.vacias+=1
 
         if nodo_X == None: 
             nodo_X = NodoCabecera(pos_x)
@@ -31,7 +32,6 @@ class MatrizPosicioness():
         if nodo_X.Columna == None: 
             nodo_X.Columna = nuevo
         else: 
-           #while nodo_X.Columna.y<=nuevo.tamaño:
                 
             if nuevo.y < nodo_X.Columna.y: 
                 nuevo.derecho = nodo_X.Columna              
@@ -81,10 +81,99 @@ class MatrizPosicioness():
                             break
                         else:
                             tmp2 = tmp2.abajo
+    '''def Llenar(self,dimensionx,dimensiony,dato,usar):
+        for i in range(int(dimensionx)):
+            for j in range(int(dimensionx)):
+
+                nuevo = nodoOrtogonal(i, j, dato,usar) 
+                nodo_X = self.filas.getEncabezado(i)
+                nodo_Y=self.columnas.getEncabezado(j)
+                if nodo_X == None: 
+                    
+                    nodo_X = NodoCabecera(i)
+                    self.filas.insertar(nodo_X)
+                 
+                if nodo_Y == None : 
+                    nodo_Y = NodoCabecera(j)
+                    self.columnas.insertar(nodo_Y)
+
+                    
+
+
+                if nodo_X.Columna == None: 
+                    nodo_X.Columna = nuevo
+                else: 
+                        
+                    if nuevo.y < nodo_X.Columna.y: 
+                        nuevo.derecho = nodo_X.Columna              
+                        nodo_X.Columna.izquierdo = nuevo
+                        nodo_X.Columna = nuevo
+                    else:
+                        tmp : nodoOrtogonal = nodo_X.Columna     
+                        while tmp != None:                      
+                            if nuevo.y < tmp.y:
+                                nuevo.derecho = tmp
+                                nuevo.izquierdo = tmp.izquierdo
+                                tmp.izquierdo.derecha = nuevo
+                                tmp.izquierdo = nuevo
+                                break;
+                            elif nuevo.x == tmp.x and nuevo.y == tmp.y:
+                                break;
+                            else:
+                                if tmp.derecho == None:
+                                    tmp.derecho = nuevo
+                                    nuevo.izquierdo = tmp
+                                    break;
+                                else:
+                                    tmp = tmp.derecho 
+                if nodo_Y.Columna == None: 
+                    nodo_Y.Columna = nuevo
+                else: 
+                    if nuevo.x < nodo_Y.Columna.x:
+                        nuevo.abajo = nodo_Y.Columna
+                        nodo_Y.Columna.arriba = nuevo
+                        nodo_Y.Columna = nuevo
+                    else:
+                        tmp2 : nodoOrtogonal = nodo_Y.Columna
+                        while tmp2 != None:
+                            if nuevo.x < tmp2.x:
+                                nuevo.abajo = tmp2
+                                nuevo.arriba = tmp2.arriba
+                                tmp2.arriba.abajo = nuevo
+                                tmp2.arriba = nuevo
+                                break;
+                            elif nuevo.x == tmp2.x and nuevo.y == tmp2.y: 
+                                break;
+                            else:
+                                if tmp2.abajo == None:
+                                    tmp2.abajo = nuevo
+                                    nuevo.arriba = tmp2
+                                    break
+                                else:
+                                    tmp2 = tmp2.abajo'''
 
 
 
-        
+    def get_posicion(self, posicionx, posiciony):
+        posicion = self.columnas.primero
+        while posicion is not None:
+            if posicionx == posicion.x and posiciony == posicion.x:
+                return posicion
+            posicion = posicion.siguiente
+        return None
+
+    def recorrido(self):
+        temporal = self.columnas.primero
+        contador = 0
+        while temporal is not None:
+            if not (temporal.dato):
+                contador += 1
+            temporal = temporal.derecho
+        if contador == self.vacias:
+            return False
+        else: 
+            return True
+
 
 
 
@@ -135,7 +224,7 @@ class MatrizPosicioness():
                     if pivotey.x == pivote_celda.y: break
                     posy_celda += 1
                     pivotey = pivotey.siguiente
-                if pivote_celda.dato == '|0|':
+                if pivote_celda.dato == '|1|':
                     contenido += '\n\tnode[label="*" fillcolor="black" pos="{},-{}!" shape=box]i{}_{};'.format( 
                         posy_celda, posx, pivote_celda.x, pivote_celda.y
                     )
