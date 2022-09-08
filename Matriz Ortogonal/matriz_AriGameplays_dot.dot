@@ -49,7 +49,7 @@ Columna8->Columna9;
 Columna9->Columna10;
 raiz -> Fila1;
         raiz -> Columna1;
-        {rank = same; raiz; Columna1;Columna2;Columna3;Columna4;Columna5;Columna6;Columna7;Columna8;Columna9;Columna10;}nodo1_5[label="1,5", fillcolor = red, group = 6]
+        {rank = same; raiz; Columna1;Columna2;Columna3;Columna4;Columna5;Columna6;Columna7;Columna8;Columna9;Columna10;}nodo10_1[label="10,1", fillcolor = green, group = 2]
 {rank = same; Fila1;nodo1_1;nodo1_2;nodo1_3;nodo1_4;nodo1_5;nodo1_6;nodo1_7;nodo1_8;nodo1_9;nodo1_10;}
 {rank = same; Fila2;nodo2_1;nodo2_2;nodo2_3;nodo2_4;nodo2_5;nodo2_6;nodo2_7;nodo2_8;nodo2_9;nodo2_10;}
 {rank = same; Fila3;nodo3_1;nodo3_2;nodo3_3;nodo3_4;nodo3_5;nodo3_6;nodo3_7;nodo3_8;nodo3_9;nodo3_10;}

@@ -35,6 +35,7 @@ class ListaVertical():
                 Nuevo.arriba=temporal2
                 
                 
+                
 
     def recorrer(self):
         aux = self.primero

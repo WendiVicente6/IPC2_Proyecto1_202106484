@@ -1,6 +1,7 @@
 from ast import LtE
 import os
 from pickle import NONE
+from pickletools import read_uint1
 import webbrowser
 from ListaHorizontalSimple import ListaHorizontal
 from NodoCabecera import Cabeceras, NodoCabecera
@@ -16,38 +17,42 @@ class MatrizOrtogonal():
         self.tamaño=0'''
         self.C=Cabeceras()
         self.F=Laterales()
-        self.primero=None
         self.p=None
         self.q=None
         
     
     def Insertar(self, Px,Py,Dato):
         Insercion=nodoOrtogonal(Dato,Px,Py)
-        self.primero=Insercion
+        self.p=Insercion
+        
         if self.C.Existe(Px)==False:
             self.C.agregar(Px)
 
-        if self.F.Existe(Py)==False:
+        elif self.F.Existe(Py)==False:
             self.F.agregar(Py)
-
+            
+            
         Ctemporal=None
         Ltemporal=None
         Ctemporal=self.C.Buscar(Px)
         Ltemporal=self.F.Buscar(Py)
-        Ctemporal.Columna.agregar(self.primero.dato,self.primero.x,self.primero.y)
-        Ltemporal.Fila.agregar(self.primero.dato,self.primero.x,self.primero.y)
+        Ctemporal.Columna.agregar(self.p.dato,self.p.x,self.p.y)
+        Ltemporal.Fila.agregar(self.p.dato,self.p.x,self.p.y)
 
     
     def Llenar(self,Px,Py,dato):
 
         for i in range(Px):
+            
             for j in range (Py):
-                Nuevo=nodoOrtogonal(dato,Px,Py)
+                
+                
+                Nuevo=nodoOrtogonal(dato,i,j)
                 self.p=Nuevo
                 if(j==0):
                     self.p.izquierdo=None
-                    if self.primero==None:
-                        self.primero=self.p
+                    if self.p==None:
+                        self.p=self.p
                     self.q=self.p
                 else:
                     self.p.izquierdo=self.q
@@ -60,19 +65,19 @@ class MatrizOrtogonal():
                     self.p.arriba=self.r 
                     self.r.abajo=self.p
                     self.r=self.r.derecho
-            self.r=self.primero 
+                self.r=self.p 
             while self.r.abajo!=None:
                 self.r=self.r.abajo
                     
                 #self.Insertar(i,j,dato)
-    def generar_grafica(self,columnas):
+    def generar_grafica(self,columnas,nombre):
         graphviz = """
         digraph L{
         node[shape = ellipse fillcolor = "yellow" style = filled]
         
 
         subgraph cluster_p{
-            label = \""""+"Prueba" +"""\"
+            label = \""""+str(nombre) +"""\"
             bgcolor = "white"
             raiz[label = "F/C"]
             edge[dir = "none"]
@@ -107,7 +112,7 @@ class MatrizOrtogonal():
         graphviz += rank
         graphviz += "}"
 
-        posiciones =self.primero
+        posiciones =self.p
         
         nodo = ""
         while posiciones is not None:
@@ -151,12 +156,11 @@ class MatrizOrtogonal():
         graphviz += """}
         }""" 
 
-        miArchivo = open('graphviz.dot', 'w')
-        miArchivo.write(graphviz)
-        miArchivo.close()
-        os.system('dot -Tpng graphviz.dot -o graphviz.png')
-        os.system('cd ./graphviz.png')
-        os.startfile('graphviz.png')
+        dot = "matriz_{}_dot.dot".format(nombre)
+        result = "matriz_{}.png".format(nombre)
+        os.system("dot -Tpng " + dot + " -o " + result)
+        os.system('cd ./'.format(result))
+        os.startfile(dot)
 
     
 

@@ -12,5 +12,7 @@ class nodoOrtogonal():
         self.abajo=None
         self.izquierdo=None
         self.derecho=None
+    def setdato(self,dato):
+        self.dato=dato
 
 

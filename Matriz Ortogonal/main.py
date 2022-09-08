@@ -43,14 +43,14 @@ def cargar_archivo(mostrar,listatejido):
 
         for rejilla in elem.iter('rejilla'):
             tejido=listatejido.get_Paciente(nombre)
-            #tejido.lista_posiciones.Insertar(tamaño,tamaño,"|0|")
+            tejido.lista_posiciones.Llenar(tamaño,tamaño,"|0|")
             for posicion in rejilla.iter('celda'):
                 
                 columna=int(posicion.attrib['c'])
                 fila=int(posicion.attrib['f'])
-                tejido.lista_posiciones.Insertar("|1|",columna,fila)
+                tejido.lista_posiciones.Insertar(fila,columna,"|1|")
             #tejido.lista_posiciones.Matriz()
-            tejido.lista_posiciones.generar_grafica(tamaño)
+            tejido.lista_posiciones.generar_grafica(tamaño,nombre)
             #tejido.lista_posiciones.graficarDot("Hola")
 
 
