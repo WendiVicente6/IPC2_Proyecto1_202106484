@@ -72,10 +72,6 @@ def menu():
         print("")
         print("""Menú principal:
         1. Cargar archivo
-        2. Procesar archivo
-        3. Escribir archivo XML de salida 
-        4. Mostrar datos del estudiante
-        5. Generar gráfica
         6. Salida
         """)
 
