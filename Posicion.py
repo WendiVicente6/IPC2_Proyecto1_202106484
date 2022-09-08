@@ -2,11 +2,11 @@ class nodoOrtogonal():
 
 
 
-    def __init__(self,x,y,dato,posicion_sin_usar):
+    def __init__(self,dx,dy,dato,posicion_sin_usar):
         self.dato=dato
 
-        self.x=x
-        self.y=y
+        self.dx=dx
+        self.dy=dy
         self.posicion_sin_usar=posicion_sin_usar
         self.arriba=None
         self.abajo=None

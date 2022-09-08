@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pacientes>
+   <paciente>
+      <datospersonales>
+         <nombre>AriGameplays</nombre>
+         <edad>24</edad>
+      </datospersonales>
+      <periodos>12</periodos>
+      <m>10</m>
+      <rejilla>
+         <celda f="0" c="4" />
+         <celda f="1" c="4" />
+         <celda f="2" c="4" />
+         <celda f="1" c="3" />
+         <celda f="1" c="5" />
+      </rejilla>
+   </paciente>
+  </pacientes>

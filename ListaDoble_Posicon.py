@@ -33,20 +33,20 @@ class MatrizPosicioness():
             nodo_X.Columna = nuevo
         else: 
                 
-            if nuevo.y < nodo_X.Columna.y: 
+            if nuevo.dy < nodo_X.Columna.dy: 
                 nuevo.derecho = nodo_X.Columna              
                 nodo_X.Columna.izquierdo = nuevo
                 nodo_X.Columna = nuevo
             else:
                 tmp : nodoOrtogonal = nodo_X.Columna     
                 while tmp != None:                      
-                    if nuevo.y < tmp.y:
+                    if nuevo.dy < tmp.dy:
                         nuevo.derecho = tmp
                         nuevo.izquierdo = tmp.izquierdo
                         tmp.izquierdo.derecha = nuevo
                         tmp.izquierdo = nuevo
                         break;
-                    elif nuevo.x == tmp.x and nuevo.y == tmp.y:
+                    elif nuevo.dx == tmp.dx and nuevo.dy == tmp.dy:
                         break;
                     else:
                         if tmp.derecho == None:
@@ -59,20 +59,20 @@ class MatrizPosicioness():
         if nodo_Y.Columna == None: 
             nodo_Y.Columna = nuevo
         else: 
-            if nuevo.x < nodo_Y.Columna.x:
+            if nuevo.dx < nodo_Y.Columna.dx:
                 nuevo.abajo = nodo_Y.Columna
                 nodo_Y.Columna.arriba = nuevo
                 nodo_Y.Columna = nuevo
             else:
                 tmp2 : nodoOrtogonal = nodo_Y.Columna
                 while tmp2 != None:
-                    if nuevo.x < tmp2.x:
+                    if nuevo.dx < tmp2.dx:
                         nuevo.abajo = tmp2
                         nuevo.arriba = tmp2.arriba
                         tmp2.arriba.abajo = nuevo
                         tmp2.arriba = nuevo
                         break;
-                    elif nuevo.x == tmp2.x and nuevo.y == tmp2.y: 
+                    elif nuevo.dx == tmp2.dx and nuevo.dy == tmp2.dy: 
                         break;
                     else:
                         if tmp2.abajo == None:
@@ -81,43 +81,43 @@ class MatrizPosicioness():
                             break
                         else:
                             tmp2 = tmp2.abajo
-    '''def Llenar(self,dimensionx,dimensiony,dato,usar):
-        for i in range(int(dimensionx)):
-            for j in range(int(dimensionx)):
+    def Llenar(self,dimensionx,dimensiony,dato,usar):
+        for i in range(0,int(dimensionx)):
+            for j in range(0,int(dimensionx)):
 
                 nuevo = nodoOrtogonal(i, j, dato,usar) 
                 nodo_X = self.filas.getEncabezado(i)
-                nodo_Y=self.columnas.getEncabezado(j)
+                nodo_Y = self.columnas.getEncabezado(j)
+                self.primero=nuevo
+                self.vacias+=1
+
                 if nodo_X == None: 
-                    
                     nodo_X = NodoCabecera(i)
                     self.filas.insertar(nodo_X)
-                 
-                if nodo_Y == None : 
+
+                if nodo_Y == None: 
                     nodo_Y = NodoCabecera(j)
                     self.columnas.insertar(nodo_Y)
 
-                    
-
-
+                # ----- INSERTAR NUEVO EN FILA
                 if nodo_X.Columna == None: 
                     nodo_X.Columna = nuevo
                 else: 
                         
-                    if nuevo.y < nodo_X.Columna.y: 
+                    if nuevo.dy < nodo_X.Columna.dy: 
                         nuevo.derecho = nodo_X.Columna              
                         nodo_X.Columna.izquierdo = nuevo
                         nodo_X.Columna = nuevo
                     else:
                         tmp : nodoOrtogonal = nodo_X.Columna     
                         while tmp != None:                      
-                            if nuevo.y < tmp.y:
+                            if nuevo.dy < tmp.dy:
                                 nuevo.derecho = tmp
                                 nuevo.izquierdo = tmp.izquierdo
                                 tmp.izquierdo.derecha = nuevo
                                 tmp.izquierdo = nuevo
                                 break;
-                            elif nuevo.x == tmp.x and nuevo.y == tmp.y:
+                            elif nuevo.dx == tmp.dx and nuevo.dy == tmp.dy:
                                 break;
                             else:
                                 if tmp.derecho == None:
@@ -126,23 +126,24 @@ class MatrizPosicioness():
                                     break;
                                 else:
                                     tmp = tmp.derecho 
+                            
                 if nodo_Y.Columna == None: 
                     nodo_Y.Columna = nuevo
                 else: 
-                    if nuevo.x < nodo_Y.Columna.x:
+                    if nuevo.dx < nodo_Y.Columna.dx:
                         nuevo.abajo = nodo_Y.Columna
                         nodo_Y.Columna.arriba = nuevo
                         nodo_Y.Columna = nuevo
                     else:
                         tmp2 : nodoOrtogonal = nodo_Y.Columna
                         while tmp2 != None:
-                            if nuevo.x < tmp2.x:
+                            if nuevo.dx < tmp2.dx:
                                 nuevo.abajo = tmp2
                                 nuevo.arriba = tmp2.arriba
                                 tmp2.arriba.abajo = nuevo
                                 tmp2.arriba = nuevo
                                 break;
-                            elif nuevo.x == tmp2.x and nuevo.y == tmp2.y: 
+                            elif nuevo.dx == tmp2.dx and nuevo.dy == tmp2.dy: 
                                 break;
                             else:
                                 if tmp2.abajo == None:
@@ -150,30 +151,7 @@ class MatrizPosicioness():
                                     nuevo.arriba = tmp2
                                     break
                                 else:
-                                    tmp2 = tmp2.abajo'''
-
-
-
-    def get_posicion(self, posicionx, posiciony):
-        posicion = self.columnas.primero
-        while posicion is not None:
-            if posicionx == posicion.x and posiciony == posicion.x:
-                return posicion
-            posicion = posicion.siguiente
-        return None
-
-    def recorrido(self):
-        temporal = self.columnas.primero
-        contador = 0
-        while temporal is not None:
-            if not (temporal.dato):
-                contador += 1
-            temporal = temporal.derecho
-        if contador == self.vacias:
-            return False
-        else: 
-            return True
-
+                                    tmp2 = tmp2.abajo
 
 
 
@@ -181,7 +159,7 @@ class MatrizPosicioness():
         contenido = '''digraph G{
     node[shape=box, width=0.7, height=0.7, fontname="Arial", fillcolor="white", style=filled]
     edge[style = "bold"]
-    node[label = "capa:''' + str(self.size) +'''" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
+    node[label = "capa:''' + "MATRIZ" +'''" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
         contenido += '''label = "{}" \nfontname="Arial Black" \nfontsize="25pt" \n
                     \n'''.format('\nTEJIDO')
 
@@ -221,30 +199,30 @@ class MatrizPosicioness():
                 pivotey = self.columnas.primero
                 posy_celda = 0
                 while pivotey != None:
-                    if pivotey.x == pivote_celda.y: break
+                    if pivotey.x == pivote_celda.dy: break
                     posy_celda += 1
                     pivotey = pivotey.siguiente
                 if pivote_celda.dato == '|1|':
-                    contenido += '\n\tnode[label="*" fillcolor="black" pos="{},-{}!" shape=box]i{}_{};'.format( 
-                        posy_celda, posx, pivote_celda.x, pivote_celda.y
+                    contenido += '\n\tnode[label="*" fillcolor="white" pos="{},-{}!" shape=box]i{}_{};'.format( 
+                        posy_celda, posx, pivote_celda.dx, pivote_celda.dy
                     )
                 else:
-                    contenido += '\n\tnode[label=" " fillcolor="white" pos="{},-{}!" shape=box]i{}_{};'.format( 
-                        posy_celda, posx, pivote_celda.x, pivote_celda.y
+                    contenido += '\n\tnode[label=" " fillcolor="black" pos="{},-{}!" shape=box]i{}_{};'.format( 
+                        posy_celda, posx, pivote_celda.dx, pivote_celda.dy
                     ) 
                 pivote_celda = pivote_celda.derecho
             
             pivote_celda = pivote.Columna
             while pivote_celda != None:
                 if pivote_celda.derecho != None:
-                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.x, pivote_celda.y,
-                    pivote_celda.derecho.x, pivote_celda.derecho.y)
-                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.x, pivote_celda.y,
-                    pivote_celda.derecho.x, pivote_celda.derecho.y)
+                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.dx, pivote_celda.dy,
+                    pivote_celda.derecho.dx, pivote_celda.derecho.dy)
+                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.dx, pivote_celda.dy,
+                    pivote_celda.derecho.dx, pivote_celda.derecho.dy)
                 pivote_celda = pivote_celda.derecho
         
-            contenido += '\n\tx{}->i{}_{};'.format(pivote.x, pivote.Columna.x, pivote.Columna.y)
-            contenido += '\n\tx{}->i{}_{}[dir=back];'.format(pivote.x, pivote.Columna.x, pivote.Columna.y)
+            contenido += '\n\tx{}->i{}_{};'.format(pivote.x, pivote.Columna.dx, pivote.Columna.dy)
+            contenido += '\n\tx{}->i{}_{}[dir=back];'.format(pivote.x, pivote.Columna.dx, pivote.Columna.dy)
             pivote = pivote.siguiente
             posx += 1
         
@@ -253,13 +231,13 @@ class MatrizPosicioness():
             pivote_celda : nodoOrtogonal = pivote.Columna
             while pivote_celda != None:
                 if pivote_celda.abajo != None:
-                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.x, pivote_celda.y,
-                    pivote_celda.abajo.x, pivote_celda.abajo.y)
-                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.x, pivote_celda.y,
-                    pivote_celda.abajo.x, pivote_celda.abajo.y) 
+                    contenido += '\n\ti{}_{}->i{}_{};'.format(pivote_celda.dx, pivote_celda.dy,
+                    pivote_celda.abajo.dx, pivote_celda.abajo.dy)
+                    contenido += '\n\ti{}_{}->i{}_{}[dir=back];'.format(pivote_celda.dx, pivote_celda.dy,
+                    pivote_celda.abajo.dx, pivote_celda.abajo.dy) 
                 pivote_celda = pivote_celda.abajo
-            contenido += '\n\ty{}->i{}_{};'.format(pivote.x, pivote.Columna.x, pivote.Columna.y)
-            contenido += '\n\ty{}->i{}_{}[dir=back];'.format(pivote.x, pivote.Columna.x, pivote.Columna.y)
+            contenido += '\n\ty{}->i{}_{};'.format(pivote.x, pivote.Columna.dx, pivote.Columna.dy)
+            contenido += '\n\ty{}->i{}_{}[dir=back];'.format(pivote.x, pivote.Columna.dx, pivote.Columna.dy)
             pivote = pivote.siguiente
                 
         contenido += '\n}'

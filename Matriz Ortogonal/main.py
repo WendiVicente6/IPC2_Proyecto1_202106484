@@ -1,7 +1,14 @@
-from operator import truediv
+from ListaHorizontalSimple import ListaHorizontal
+from ListaPosicionesDoble import MatrizOrtogonal
+from ListasVerticalesSimple import ListaVertical
+from ListaSimplePaciente import Matriz
+
 
 import xml.etree.ElementTree as ET
-from Pacientes import Matriz
+from NodoCabecera import Cabeceras, NodoCabecera
+
+from NodoOrtogonal import nodoOrtogonal
+
 
 
 
@@ -32,19 +39,25 @@ def cargar_archivo(mostrar,listatejido):
         for m in elem.iter('m'):
             tamaño=int(m.text)
             print('Tamaño Tejido:' ,tamaño)
-        listatejido.Crear_Paciente(tamaño,nombre,edad,cantper,)
+        listatejido.Crear_Paciente(tamaño,nombre,edad,cantper)
 
         for rejilla in elem.iter('rejilla'):
             tejido=listatejido.get_Paciente(nombre)
+            #tejido.lista_posiciones.Insertar(tamaño,tamaño,"|0|")
             for posicion in rejilla.iter('celda'):
                 
                 columna=int(posicion.attrib['c'])
                 fila=int(posicion.attrib['f'])
-                print('C y F:',columna,fila)
-                tejido.lista_posiciones.Insertar(fila,columna,"|0|",posicion_sin_usar)
-            tejido.lista_posiciones.Llenar(tamaño,tamaño,"|1|",posicion_sin_usar)
-            tejido.lista_posiciones.graficarDibujo("TEJIDOS")
+                tejido.lista_posiciones.Insertar("|1|",columna,fila)
+            #tejido.lista_posiciones.Matriz()
+            tejido.lista_posiciones.generar_grafica(tamaño)
+            #tejido.lista_posiciones.graficarDot("Hola")
 
+
+
+
+
+                  
 def menu():
     print("")
     
@@ -52,14 +65,17 @@ def menu():
     
     opcion = ''
     matriz=Matriz()
-
-
-    
+    #grafica=MatrizPosicioness(0)
+    listavertical=MatrizOrtogonal()
+   
     while opcion != '6':
         print("")
         print("""Menú principal:
         1. Cargar archivo
-
+        2. Procesar archivo
+        3. Escribir archivo XML de salida 
+        4. Mostrar datos del estudiante
+        5. Generar gráfica
         6. Salida
         """)
 
@@ -71,7 +87,7 @@ def menu():
             file = './' + filename
             cargar_archivo(file,matriz)
         if opcion == '2':
-           pass
+            pass
             
             
             #lista.imprimir_terrenos()
